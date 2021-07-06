@@ -2,13 +2,15 @@
 
 namespace Controller;
 
-class PanierController {
+class PanierController extends BaseController {
 
     public function index() {
-        echo "Vous êtes dans le panier";
+        $this->afficherVue();
     }
 
-    public function supprimerArticle() {
+    public function supprimerArticle($parametres) {
+        echo "Suppression de l'article avec l'id ";
+        echo $parametres[0]."<br>";
         echo "L'article est bien supprimé";
     }
 }

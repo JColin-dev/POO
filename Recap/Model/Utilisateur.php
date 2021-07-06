@@ -4,8 +4,13 @@ namespace Model;
 
 class Utilisateur 
 {
-    private $prenom;
-    private $nom;
+    protected $prenom;
+    protected $nom;
+
+    public function __construct($prenom,$nom) {
+        $this->prenom = $prenom;
+        $this->nom = strtoupper($nom);
+    }
 
     public function nomComplet() {
         return $this->getNom(). " " .$this->prenom;
