@@ -3,7 +3,7 @@
 namespace Controller;
 
 class BaseController {
-    public function afficherVue($fichier = "index") {
+    public function afficherVue($fichier = "index", $donnees = []) {
 
         $dossier = substr(get_class($this), 11, -10);
 

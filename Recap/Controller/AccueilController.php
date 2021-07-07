@@ -2,6 +2,7 @@
 
 namespace Controller;
 
+use DAO\ProduitDao;
 use DAO\UtilisateurDao;
 use Model\Client;
 use Model\Utilisateur;
@@ -16,9 +17,13 @@ class AccueilController extends BaseController
     public function index()
     {
 
-        $dao = new UtilisateurDao();
+        $dao = new ProduitDao();
 
-        $listeUtilisateurs = $dao->findAll();
+        $listeProduits = $dao->findAll();
+
+        $donnees = compact('listeProduits');
+
+        $this->afficherVue('index', $donnees);
 
         //echo $listeUtilisateurs[0]->nomComplet();
 
@@ -26,8 +31,6 @@ class AccueilController extends BaseController
         //echo $client->code();
 
         //echo $client->nomComplet();
-
-        $this->afficherVue();
 
         /*$john = new Client();
         $john->setPrenom("John");

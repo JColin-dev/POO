@@ -21,17 +21,24 @@ class BaseDao
 
         $nomClasseModel = "Model\\" . ucfirst($table);
 
+        //pour chaque ligne de la table
         foreach ($resultat->fetchAll() as $ligneResultat) {
 
+            //on créé une instance de la classe 
             $model = new $nomClasseModel();
 
+            //pour chaque index du tableau $ligneResultat
             foreach ($ligneResultat as $key => $valeur) {
+
+                //on en déduit le setter
                 $nomSetter = "set" . ucfirst($key);
 
+                //si le setter existe bien
                 if (method_exists($nomClasseModel, $nomSetter)) {
                     $model->$nomSetter($valeur);
                 }
             }
+            $listeUtilisateurs[] = $model;
         }
 
         return $listeUtilisateurs;
