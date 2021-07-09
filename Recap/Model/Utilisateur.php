@@ -7,6 +7,9 @@ class Utilisateur
     protected $id;
     protected $prenom;
     protected $nom;
+    protected $pseudo;
+    protected $motDePasse;
+    protected $isAdmin;
 
     public function __construct($prenom = "", $nom = "", $id = null)
     {
@@ -76,6 +79,66 @@ class Utilisateur
     public function setId($id)
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of pseudo
+     */ 
+    public function getPseudo()
+    {
+        return $this->pseudo;
+    }
+
+    /**
+     * Set the value of pseudo
+     *
+     * @return  self
+     */ 
+    public function setPseudo($pseudo)
+    {
+        $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of motDePasse
+     */ 
+    public function getMotDePasse()
+    {
+        return $this->motDePasse;
+    }
+
+    /**
+     * Set the value of motDePasse
+     *
+     * @return  self
+     */ 
+    public function setMotDePasse($motDePasse)
+    {
+        $this->motDePasse = $motDePasse;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of isAdmin
+     */ 
+    public function getIsAdmin()
+    {
+        return $this->isAdmin;
+    }
+
+    /**
+     * Set the value of isAdmin
+     *
+     * @return  self
+     */ 
+    public function setIsAdmin($isAdmin)
+    {
+        $this->isAdmin = $isAdmin;
 
         return $this;
     }

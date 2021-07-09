@@ -1,26 +1,21 @@
 <?php
 
-use App\Autoloader;
-
 use Model\Utilisateur;
 
-class Application {
+class Application
+{
 
-    public static function demarrer() {
+    public static function demarrer()
+    {
+        $partiesUrl = explode("/", $_GET["page"]);
 
-        include("Autoloader.php");
-
-        Autoloader::register();
-
-        $partiesUrl = explode("/",$_GET["page"]);
-        
-        if(count($partiesUrl) > 0 && $partiesUrl[0] != "") {
+        if (count($partiesUrl) > 0 && $partiesUrl[0] != "") {
             $partieUrlController = $partiesUrl[0];
         } else {
             $partieUrlController = "accueil";
         }
 
-        if(count($partiesUrl) > 1 && $partiesUrl[1] != "") {
+        if (count($partiesUrl) > 1 && $partiesUrl[1] != "") {
             $partieUrlMethode = $partiesUrl[1];
         } else {
             $partieUrlMethode = "index";
@@ -28,13 +23,13 @@ class Application {
 
         //ucfirst met en capitale la première lettre
         //dans $nomController il y a Controller/AccueilController dans ce cas
-        $nomController = "Controller\\".ucfirst($partieUrlController). "Controller";
+        $nomController = "Controller\\" . ucfirst($partieUrlController) . "Controller";
 
         //si la methode n'existe pas, il renvoie vers la page 404 ou toute autre page qu'on voudrait
-        if(!method_exists($nomController, $partieUrlMethode)) {
+        if (!method_exists($nomController, $partieUrlMethode)) {
             $nomController = "Controller\AccueilController";
             $partieUrlMethode = "nonTrouve";
-            
+
             /*http_response_code(404);
             die();
             */
@@ -51,8 +46,6 @@ class Application {
         //$nomController (ex : Controller/AccueilController)
         $controller = new $nomController();
         $controller->$partieUrlMethode($parametres);
-
-        
     }
 
     /*public function demarrer() {
@@ -65,5 +58,4 @@ class Application {
 
         echo $utilisateur->nomComplet();
         */
-    }
-
+}

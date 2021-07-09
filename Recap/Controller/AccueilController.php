@@ -21,7 +21,11 @@ class AccueilController extends BaseController
 
         $listeProduits = $dao->findAll();
 
-        $donnees = compact('listeProduits');
+        $dao = new UtilisateurDao();
+
+        $listeUtilisateurs = $dao->findAll();
+
+        $donnees = compact('listeProduits', "listeUtilisateurs");
 
         $this->afficherVue('index', $donnees);
 
