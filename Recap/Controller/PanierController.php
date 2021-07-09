@@ -2,10 +2,18 @@
 
 namespace Controller;
 
+use DAO\ProduitDao;
+
 class PanierController extends BaseController {
 
     public function index() {
-        $this->afficherVue();
+
+        $dao = new ProduitDao();
+
+        $listeProduits = $dao->findAll();
+
+        $donnees = compact('listeProduits');
+        $this->afficherVue('index', $donnees);
     }
 
     public function supprimerArticle($parametres) {

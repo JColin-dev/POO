@@ -29,4 +29,18 @@ class UtilisateurController extends BaseController
             echo "mauvais mot de passe";
         }
     }
+
+    public function deconnexion() {
+        session_unset();
+        session_destroy();
+        header("Location: /Tests_POO_PHP/Recap/utilisateur");
+    }
+
+    public function inscription() {
+        $this->afficherVue("inscription");
+    }
+
+    public function contact() {
+        $this->afficherVue("contact");
+    }
 }

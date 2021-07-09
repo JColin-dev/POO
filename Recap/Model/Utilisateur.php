@@ -11,11 +11,12 @@ class Utilisateur
     protected $motDePasse;
     protected $isAdmin;
 
-    public function __construct($prenom = "", $nom = "", $id = null)
+    public function __construct($prenom = "", $nom = "", $id = null, $isAdmin="")
     {
         $this->id = $id;
         $this->prenom = $prenom;
         $this->nom = strtoupper($nom);
+        $this->isAdmin = $isAdmin;
     }
 
     public function nomComplet()

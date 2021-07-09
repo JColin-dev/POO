@@ -20,7 +20,7 @@ class Utilisateur {
     }
 
     public function nomComplet(){
-        return $this->nom." ".$this->prenom;
+        return $this->prenom." ".$this->nom;
     }
 
     //------------- ACCESSEURS --------------

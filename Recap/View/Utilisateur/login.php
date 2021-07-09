@@ -1,5 +1,5 @@
 <!--on appelle le controller utilisateur puis la méthode connexion par le chemin dans action. Plus besoin de faire autrement -->
-<form action="./utilisateur/connexion" method="post">
+<form action="/Tests_POO_PHP/Recap/utilisateur/connexion" method="post">
 
     <div class="form-group">
         <label class="col-form-label" for="inputDefault">Pseudo</label>

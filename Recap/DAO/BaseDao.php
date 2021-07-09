@@ -87,4 +87,70 @@ class BaseDao
         }
         return $model;
     }
+
+    /**
+     * Retourne l'utilisateur correspondant à l'ID passé en paramètres
+     */
+    public function findById($id)
+    {
+        $sql = "SELECT * FROM " . $this->getNomTable() . " WHERE id = :id";
+
+        try {
+            $connexion = new Connexion();
+
+            $requete = $connexion->prepare($sql);
+
+            $requete->execute(
+                [
+                    ":id" => $id
+                ]
+            );
+
+            return $this->transformeTableauEnObjet($requete->fetch());
+        } catch (PDOException $e) {
+            echo "erreur... :(";
+        }
+    }
+
+    public function deleteById($id)
+    {
+        $sql = "DELETE FROM " . $this->getNomTable() . " WHERE id = :id";
+
+        try {
+            $connexion = new Connexion();
+
+            $requete = $connexion->prepare($sql);
+
+            $requete->execute(
+                [
+                    ":id" => $id
+                ]
+            );
+
+        } catch (PDOException $e) {
+            echo "erreur... :(". $e->getMessage();
+        }
+    }
+
+    public function updateById($post) {
+
+        $sql = "UPDATE" . $this->getNomTable() . "SET nom=?, description=?, prix=? WHERE id = :id";
+
+        try {
+            $connexion = new Connexion();
+
+            $requete = $connexion->prepare($sql);
+
+            $requete->execute(
+                [
+                    $this->getNom(),
+                    $this->getDescription(),
+                    $this->getPrix(),
+                    ":id" => $id
+                ]
+            );
+        } catch (PDOException $e) {
+            echo "erreur... :(" . $e->getMessage();
+        }
+    }
 }
