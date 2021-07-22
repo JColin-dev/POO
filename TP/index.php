@@ -33,41 +33,65 @@ Autoloader::register();
 
                 <div class="collapse navbar-collapse" id="navbarColor02">
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Offres</a>
-                        </li>
 
-                       
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Ajouter offre</a>
-                        </li>
-                        <li class="nav-item">
+                        <?php
 
-                            
+                        if (isset($_SESSION["utilisateur"])) {
 
-                                <a class="nav-link" href="/TP_POO_PHP/POO/TP/utilisateur/deconnexion">Déconnexion</a>
-                        </li>
+                            $utilisateur = unserialize($_SESSION["utilisateur"]);
 
-                  
+                            if ($utilisateur->getEntreprise()) { ?>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="/TP_POO_PHP/POO/TP/utilisateur/connexion">Connexion</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/TP_POO_PHP/POO/TP/utilisateur/inscription">Inscription</a>
-                        </li>
-                    
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/TP_POO_PHP/POO/TP/Offre/index">Ajouter offre</a>
+                                </li>
+                                <li class="nav-item">
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/TP_POO_PHP/POO/TP/Offre/afficheOffre">Offres</a>
+                                </li>
+                            <?php } else { ?>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/TP_POO_PHP/POO/TP/Offre/afficheOffre">Offres</a>
+                                </li>
+                            <?php }
+                        }
+
+
+
+                        $utilisateur = NULL;
+
+                        if (isset($_SESSION["utilisateur"])) {
+
+                            ?>
+
+                            <a class="nav-link" href="/TP_POO_PHP/POO/TP/utilisateur/deconnexion">Déconnexion</a>
+                            </li>
+
+                        <?php } else { ?>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/TP_POO_PHP/POO/TP/utilisateur/connexion">Connexion</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/TP_POO_PHP/POO/TP/utilisateur/inscription">Inscription</a>
+                            </li>
+                        <?php } ?>
                     </ul>
+                    <form class="d-flex" method="post" action="/TP_POO_PHP/POO/TP/offre/afficheOneOffre">
+                        <input class=" form-control me-sm-2" type="text" placeholder="Rechercher" name="offre">
+                        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Rechercher une offre</button>
+                    </form>
                 </div>
             </div>
         </nav>
     </header>
+    
+        <?php
 
-    <?php
+        Application::demarrer();
 
-    Application::demarrer();
-
-    ?>
+        ?>
 
 </body>
 

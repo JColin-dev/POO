@@ -11,9 +11,11 @@ class UtilisateurController extends BaseController
     {
         $dao = new UtilisateurDao();
 
-        $utilisateur = $dao->findByPseudo($_POST["pseudo"]);
+        
 
         if (isset($_POST["pseudo"])) {
+            $utilisateur = $dao->findByPseudo($_POST["pseudo"]);
+
             if (password_verify($_POST["password"], $utilisateur->getMotDePasse())) {
                 $_SESSION["utilisateur"] = serialize($utilisateur);
                 header("Location: /TP_POO_PHP/POO/TP");
@@ -34,6 +36,13 @@ class UtilisateurController extends BaseController
 
     public function inscription()
     {
+        if (isset($_POST["pseudo"])) {
+        $dao = new UtilisateurDao();
+        $dao->insertUser($_POST["pseudo"], $_POST["password"], $_POST["email"], isset($_POST["entreprise"]));
+
+        } else {
+
         $this->afficherVue("inscription");
+        }
     }
 }

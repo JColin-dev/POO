@@ -1,3 +1,37 @@
-.collapse {
-    width: 200px;
+.offre {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 160px;
 }
+
+.carte {
+    margin: 20px; 
+}
+
+.btn {
+    width: 250px;
+}
+
+.form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 150px;
+    text-align: center;
+}
+
+.liste {
+    color: rgb(16, 16, 161);
+    text-align: center;
+    margin: 5px;
+}
+
+body {
+    background-color: #cecece !important;
+}
+
+
+

@@ -2,7 +2,7 @@
 
 namespace Model;
 
-class Utlisateur {
+class Utilisateur {
     protected $id;
     protected $pseudo;
     protected $motDePasse;
