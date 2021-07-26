@@ -50,4 +50,26 @@ class OffreDao extends BaseDao
             echo $e->getMessage();
         }
     }
+
+    public function modifyById($id, $titre, $description)
+    {
+
+        $sql = "UPDATE " . $this->getNomTable() . " SET titre = :titre, description = :description WHERE id = :id";
+
+        try {
+            $connexion = new Connexion();
+
+            $requete = $connexion->prepare($sql);
+
+            $requete->execute(
+                [
+                    ":titre" => $titre,
+                    ":description" => $description,
+                    ":id" => $id
+                ]
+            );
+        } catch (PDOException $e) {
+            echo "erreur... :(" . $e->getMessage();
+        }
+    }
 }

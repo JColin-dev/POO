@@ -31,7 +31,7 @@ class UtilisateurDao extends BaseDao
             $connexion = new Connexion();
             
 
-            $requete = $connexion->prepare("INSERT INTO utilisateur (pseudo, email, mot_de_passe, entreprise) 
+            $requete = $connexion->prepare("   utilisateur (pseudo, email, mot_de_passe, entreprise) 
             VALUES (?,?,?,?)");
             $requete->execute(array($pseudo,
                                     $email,

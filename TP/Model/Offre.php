@@ -2,7 +2,7 @@
 
 namespace Model;
 
-class Offre {
+class Offre extends BaseModel{
     protected $id;
     protected $titre;
     protected $description;

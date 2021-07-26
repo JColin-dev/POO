@@ -36,13 +36,21 @@ class UtilisateurController extends BaseController
 
     public function inscription()
     {
+        $pseudo = "";
+        $entreprise = false;
+
         if (isset($_POST["pseudo"])) {
-        $dao = new UtilisateurDao();
-        $dao->insertUser($_POST["pseudo"], $_POST["password"], $_POST["email"], isset($_POST["entreprise"]));
+            $pseudo = $_POST["pseudo"];
+            $entreprise = isset($_POST['entreprise']);
+            
+            $dao = new UtilisateurDao();
+            $dao->insertUser($_POST["pseudo"], $_POST["password"], $_POST["email"], isset($_POST["entreprise"]));
+
+            header("Location: /TP_POO_PHP/POO/TP/utilisateur/connexion");
 
         } else {
-
-        $this->afficherVue("inscription");
+            $donnees = compact('pseudo', 'entreprise');
+          $this->afficherVue("inscription", $donnees);
         }
     }
 }

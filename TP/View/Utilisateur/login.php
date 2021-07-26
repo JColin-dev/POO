@@ -1,6 +1,5 @@
 <div class="connect">
     <form class="form" method="post">
-
         <div class="form-group">
             <label class="col-form-label" for="inputDefault">Pseudo</label>
             <input style="max-width:300px" name="pseudo" type="text" class="form-control" placeholder="Pseudo" id="inputDefault">

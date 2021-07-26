@@ -1,7 +1,7 @@
-<form class="form" action="/TP_POO_PHP/POO/TP/utilisateur/inscription" method="post">
+<form class="form" action="" method="post">
     <div class="form-group">
         <label class="col-form-label" for="inputDefault">Pseudo</label>
-        <input style="max-width:300px" type="text" class="form-control" name="pseudo" id="inputDefault">
+        <input style="max-width:300px" type="text" class="form-control" name="pseudo" value="<?php echo $pseudo ?>" id="inputDefault">
     </div>
 
     <div class="form-group">
@@ -14,7 +14,7 @@
         <input style="max-width:300px" type="password" class="form-control" id="exampleInputPassword1" name="password">
     </div>
     <div class="form-check">
-        <input class="form-check-input" type="checkbox" name="entreprise" value="" id="flexCheckDefault">
+        <input class="form-check-input" type="checkbox" name="entreprise" value="<?php if($entreprise) echo "checked"; ?>" id="flexCheckDefault">
         <label class="form-check-label" for="flexCheckDefault">
             Entreprise ? Cochez, si oui.
         </label>
