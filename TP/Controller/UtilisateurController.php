@@ -11,27 +11,30 @@ class UtilisateurController extends BaseController
     {
         $dao = new UtilisateurDao();
 
-        
+
 
         if (isset($_POST["pseudo"])) {
             $utilisateur = $dao->findByPseudo($_POST["pseudo"]);
 
             if (password_verify($_POST["password"], $utilisateur->getMotDePasse())) {
                 $_SESSION["utilisateur"] = serialize($utilisateur);
-                header("Location: /TP_POO_PHP/POO/TP");
+                $this->afficherMessage('Vous êtes bien connecté', 'success');
+                $this->redirection();
             } else {
-                echo "mauvais mot de passe";
+                $this->afficherMessage('Mauvais mot de passe', 'danger');
             }
-        } else {
-            $this->afficherVue("login");
         }
+
+        $this->afficherVue("login");
     }
 
     public function deconnexion()
     {
         session_unset();
         session_destroy();
-        header("Location: /TP_POO_PHP/POO/TP");
+        session_start();
+        $this->afficherMessage('Vous êtes bien déconnecté', 'success');
+        $this->redirection();
     }
 
     public function inscription()
@@ -42,15 +45,14 @@ class UtilisateurController extends BaseController
         if (isset($_POST["pseudo"])) {
             $pseudo = $_POST["pseudo"];
             $entreprise = isset($_POST['entreprise']);
-            
+
             $dao = new UtilisateurDao();
             $dao->insertUser($_POST["pseudo"], $_POST["password"], $_POST["email"], isset($_POST["entreprise"]));
 
-            header("Location: /TP_POO_PHP/POO/TP/utilisateur/connexion");
-
-        } else {
-            $donnees = compact('pseudo', 'entreprise');
-          $this->afficherVue("inscription", $donnees);
+            $this->afficherMessage('Vous êtes bien inscrit', 'success');
+            $this->redirection("utilisateur/connexion");   
         }
+        $donnees = compact('pseudo', 'entreprise');
+        $this->afficherVue("inscription", $donnees);
     }
 }

@@ -26,17 +26,20 @@ class UtilisateurDao extends BaseDao
         }
     }
 
-    public function insertUser($pseudo, $password, $email, $entreprise) {
+    public function insertUser($pseudo, $password, $email, $entreprise)
+    {
         try {
             $connexion = new Connexion();
-            
 
-            $requete = $connexion->prepare("   utilisateur (pseudo, email, mot_de_passe, entreprise) 
+
+            $requete = $connexion->prepare("INSERT INTO utilisateur (pseudo, email, mot_de_passe, entreprise) 
             VALUES (?,?,?,?)");
-            $requete->execute(array($pseudo,
-                                    $email,
-                                    password_hash($password,PASSWORD_BCRYPT),
-                                    $entreprise ? 1 : 0));
+            $requete->execute(array(
+                $pseudo,
+                $email,
+                password_hash($password, PASSWORD_BCRYPT),
+                $entreprise ? 1 : 0
+            ));
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
