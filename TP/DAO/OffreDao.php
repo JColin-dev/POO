@@ -2,6 +2,7 @@
 
 namespace DAO;
 
+use Model\Utilisateur;
 use Connexion;
 use PDOException;
 
@@ -12,7 +13,10 @@ class OffreDao extends BaseDao
         try {
             $connexion = new Connexion();
 
-            $requete = $connexion->prepare("SELECT * FROM offre WHERE description LIKE :recherche OR titre LIKE :recherche");
+            $requete = $connexion->prepare("SELECT o.id, o.titre, o.description, o.id_utilisateur, u.pseudo 
+            FROM offre o 
+            JOIN utilisateur u ON o.id_utilisateur = u.id 
+            WHERE description LIKE :recherche OR titre LIKE :recherche OR pseudo LIKE :recherche");
 
             $requete->execute(
                 [
@@ -27,10 +31,16 @@ class OffreDao extends BaseDao
 
                 $offre = $this->transformeTableauEnObjet($ligneResultat);
 
+                $utilisateur = new Utilisateur();
+                $utilisateur->setId($ligneResultat['id_utilisateur']);
+                $utilisateur->setPseudo($ligneResultat['pseudo']);
+
+                $offre->setUtilisateur($utilisateur);
+
                 $listeOffres[] = $offre;
             }
-
             return $listeOffres;
+
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
@@ -71,5 +81,29 @@ class OffreDao extends BaseDao
         } catch (PDOException $e) {
             echo "erreur... :(" . $e->getMessage();
         }
+    }
+
+    public function findAllWithUser() {
+        $connexion = new Connexion();
+
+        $resultat = $connexion->query("SELECT o.id, o.titre, o.description, o.id_utilisateur, u.pseudo FROM offre o JOIN utilisateur u ON o.id_utilisateur = u.id");
+
+        $listeOffres = [];
+
+        //pour chaque ligne de la table
+        foreach ($resultat->fetchAll() as $ligneResultat) {
+
+            $offre = $this->transformeTableauEnObjet($ligneResultat);
+
+            $utilisateur = new Utilisateur();
+            $utilisateur->setId($ligneResultat['id_utilisateur']);
+            $utilisateur->setPseudo($ligneResultat['pseudo']);
+
+            $offre->setUtilisateur($utilisateur);
+
+            $listeOffres[] = $offre;
+        }
+
+        return $listeOffres;
     }
 }

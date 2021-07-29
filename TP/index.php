@@ -56,6 +56,9 @@ Autoloader::register();
                                 <li class="nav-item">
                                     <a class="nav-link" href="/TP_POO_PHP/POO/TP/Offre/afficheOffre">Offres</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/TP_POO_PHP/POO/TP/Utilisateur/profil">Mon profil</a>
+                                </li>
                             <?php }
                         }
 

@@ -6,6 +6,7 @@ class Offre extends BaseModel{
     protected $id;
     protected $titre;
     protected $description;
+    protected $utilisateur;
 
     /**
      * Get the value of id
@@ -63,6 +64,26 @@ class Offre extends BaseModel{
     public function setDescription($description)
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of utilisateur
+     */ 
+    public function getUtilisateur()
+    {
+        return $this->utilisateur;
+    }
+
+    /**
+     * Set the value of utilisateur
+     *
+     * @return  self
+     */ 
+    public function setUtilisateur($utilisateur)
+    {
+        $this->utilisateur = $utilisateur;
 
         return $this;
     }

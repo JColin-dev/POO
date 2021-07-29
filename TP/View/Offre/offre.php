@@ -8,7 +8,7 @@
     ?>
         <div class="carte">
             <div class="card border-dark mb-3" style="max-width: 20rem;">
-                <div class="card-header"><?php echo $offre->getTitre(); ?></div>
+                <div class="card-header"><?php echo $offre->getTitre(); ?>, Publié par : <?php echo $offre->getUtilisateur()->getPseudo(); ?></div>
                 <div class="card-body">
                     <p class="card-text"><?php echo substr($offre->getDescription(),0,200); ?></p>
                 </div>

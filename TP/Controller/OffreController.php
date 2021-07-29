@@ -19,7 +19,7 @@ class OffreController extends BaseController
     {
         $dao = new OffreDao();
 
-        $listeOffres = $dao->findAll();
+        $listeOffres = $dao->findAllWithUser();
 
         $donnees = compact('listeOffres');
         $this->afficherVue('offre', $donnees);

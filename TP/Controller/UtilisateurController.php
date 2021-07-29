@@ -2,6 +2,7 @@
 
 namespace Controller;
 
+use Dao\CompetenceDao;
 use DAO\UtilisateurDao;
 
 class UtilisateurController extends BaseController
@@ -54,5 +55,17 @@ class UtilisateurController extends BaseController
         }
         $donnees = compact('pseudo', 'entreprise');
         $this->afficherVue("inscription", $donnees);
+    }
+
+    public function profil() {
+        $utilisateur = unserialize($_SESSION['utilisateur']);
+        $idUtilisateurConnecte = $utilisateur->getId();
+
+        $dao = new CompetenceDao();
+        $listeCompetence = $dao->findByIdUtilisateur($idUtilisateurConnecte);
+
+        $donnees = compact("listeCompetence", "utilisateur");
+        $this->afficherVue("profil", $donnees);
+        
     }
 }
