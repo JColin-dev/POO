@@ -7,3 +7,4 @@
         <a type="button" class="btn btn-warning" href=" TP_POO_PHP/POO/TP/Offre/supprimerOffre/<?php echo $offre->getId(); ?>">Supprimer </a>
     </div>
 </div>
+

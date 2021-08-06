@@ -26,6 +26,47 @@ class CompetenceDao extends BaseDao {
         }
         return $listeCompetence;
     }
+
+    public function findCompetence($id)
+    {
+        $connexion = new Connexion;
+
+        $requete = $connexion->prepare("SELECT * FROM competence_offre co
+        JOIN competence c 
+        ON c.id = co.id_competence WHERE co.id_offre=?");
+        $requete->execute(array(
+            $id
+        ));
+        $listeCompetence = [];
+
+        //pour chaque ligne de la table
+        foreach ($requete->fetchAll() as $ligneCompetence) {
+            $listeCompetence[] = $this->transformeTableauEnObjet($ligneCompetence);
+        }
+        return $listeCompetence;
+    }
+
+    public function findAllNonAttribueeOffre($idOffre)
+    {
+        $connexion = new Connexion;
+
+        $requete = $connexion->prepare("SELECT * FROM competence c
+        WHERE c.id NOT IN (
+        SELECT co.id_competence
+        FROM competence_offre co 
+        WHERE co.id_offre = ?)");
+        $requete->execute(array(
+            $idOffre
+        ));
+
+        $listeCompetence = [];
+
+        //pour chaque ligne de la table
+        foreach ($requete->fetchAll() as $ligneCompetence) {
+            $listeCompetence[] = $this->transformeTableauEnObjet($ligneCompetence);
+        }
+        return $listeCompetence;
+    }
 }
 
 

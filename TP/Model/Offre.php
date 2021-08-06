@@ -7,6 +7,12 @@ class Offre extends BaseModel{
     protected $titre;
     protected $description;
     protected $utilisateur;
+    protected $domaine;
+    protected $listeCompetence = [];
+
+    public function ajoutCompetence($competence) {
+        $this->listeCompetence[] = $competence;
+    }
 
     /**
      * Get the value of id
@@ -84,6 +90,46 @@ class Offre extends BaseModel{
     public function setUtilisateur($utilisateur)
     {
         $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of domaine
+     */ 
+    public function getDomaine()
+    {
+        return $this->domaine;
+    }
+
+    /**
+     * Set the value of domaine
+     *
+     * @return  self
+     */ 
+    public function setDomaine($domaine)
+    {
+        $this->domaine = $domaine;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of listeCompetence
+     */ 
+    public function getListeCompetence()
+    {
+        return $this->listeCompetence;
+    }
+
+    /**
+     * Set the value of listeCompetence
+     *
+     * @return  self
+     */ 
+    public function setListeCompetence($listeCompetence)
+    {
+        $this->listeCompetence = $listeCompetence;
 
         return $this;
     }

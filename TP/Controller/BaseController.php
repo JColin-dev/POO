@@ -2,6 +2,8 @@
 
 namespace Controller;
 
+use Config;
+
 class BaseController
 {
     public function afficherVue($fichier = "index", $donnees = [])
@@ -27,7 +29,7 @@ class BaseController
 
     public function redirection($chemin = "")
     {
-        header("Location: /TP_POO_PHP/POO/TP/" . $chemin);
+        header("Location: " . Config::$baseUrl ."/" . $chemin);
         die();
     }
 }

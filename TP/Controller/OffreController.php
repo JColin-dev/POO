@@ -2,6 +2,7 @@
 
 namespace Controller;
 
+use Dao\CompetenceDao;
 use DAO\OffreDao;
 use Model\Offre;
 
@@ -11,16 +12,21 @@ class OffreController extends BaseController
     {
         $modification = false;
 
-        $parametres = compact("modification");
+        $utilisateur = unserialize($_SESSION['utilisateur']);
+        $idUtilisateurConnecte = $utilisateur->getId();
 
-        $this->afficherVue("form_offre", $parametres);
+        $dao = new CompetenceDao();
+        
+        $listeCompetence = $dao->findAll();
+
+        $donnees = compact("listeCompetence", "utilisateur", "modification", "idUtilisateurConnecte");
+        $this->afficherVue("form_offre", $donnees);
     }
     public function afficheOffre()
     {
         $dao = new OffreDao();
-
-        $listeOffres = $dao->findAllWithUser();
-
+        $listeOffres = $dao->findAllWithInfo();
+    
         $donnees = compact('listeOffres');
         $this->afficherVue('offre', $donnees);
     }
@@ -29,7 +35,10 @@ class OffreController extends BaseController
     {
         $dao = new OffreDao();
 
-        $dao->insertOffer($_POST["titre"], $_POST["description"]);
+        $utilisateur = unserialize($_SESSION['utilisateur']);
+        $idUtilisateurConnecte = $utilisateur->getId();
+
+        $dao->insertOffer($_POST["titre"], $_POST["description"], $_POST["competence"], $idUtilisateurConnecte);
     }
 
     public function afficheOneOffre()
@@ -53,17 +62,29 @@ class OffreController extends BaseController
 
         if (isset($_POST["titre"])) {
 
+            $id = $parametres[0];
+
             $dao = new OffreDao;
-            $dao->modifyById($_POST["id"], $_POST["titre"], $_POST["description"]);
+            $dao->modifyById($parametres[0], $_POST["titre"], $_POST["description"]);
+
+            //si l'utilisateur a selectionné une compétence dans la liste déroulante
+            if($_POST["competence"] != "") {
+                $dao->ajouterCompetence($parametres[0], $_POST["competence"]);
+            }
+            
         } else {
             $modification = true;
 
+            $dao = new CompetenceDao();
+            $id = $parametres[0];
+            $listeCompetenceOffre = $dao->findCompetence($id);
+            $listeCompetence = $dao->findAllNonAttribueeOffre($id);
+
             $dao = new OffreDao();
             $id = $parametres[0];
-
             $offre = $dao->findById($id);
-
-            $parametres = compact("modification", "id", "offre");
+            
+            $parametres = compact("modification", "id", "offre", "listeCompetence", "listeCompetenceOffre");
             $this->afficherVue("form_offre", $parametres);
         }
     }
@@ -77,4 +98,26 @@ class OffreController extends BaseController
         $donnees = compact('offre');
         $this->afficherVue('detailOffre', $donnees);
     }
+
+    public function supprimerCompetence($parametres) {
+        $idOffre = $parametres[0];
+        $idCompetence= $parametres[1];
+
+        $daoOffre = new OffreDao();
+
+        $idUtilisateurOffre = $daoOffre->findByIdAvecUtilisateur($idOffre);
+        $utilisateur = unserialize($_SESSION['utilisateur']);
+        $idUtilisateurConnecte = $utilisateur->getId();
+
+        if($idUtilisateurOffre == $idUtilisateurConnecte) {
+            $daoOffre->supprimerCompetence($idOffre, $idCompetence);
+            $this->afficherMessage("La compétence a bien été supprimée", "success");
+        } else {
+            $this->afficherMessage("Vous ne pouvez pas modifier cette offre", "danger");
+        }
+
+        $this->redirection("offre/modifierOffre/" .$idOffre);
+    }
+
+    
 }

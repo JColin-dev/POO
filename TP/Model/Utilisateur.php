@@ -7,6 +7,7 @@ class Utilisateur extends BaseModel {
     protected $pseudo;
     protected $motDePasse;
     protected $entreprise;
+    protected $nomAvatar;
 
     public function __construct($pseudo = "", $id = NULL)
     {
@@ -90,6 +91,26 @@ class Utilisateur extends BaseModel {
     public function setEntreprise($entreprise)
     {
         $this->entreprise = $entreprise;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of nomAvatar
+     */ 
+    public function getNomAvatar()
+    {
+        return $this->nomAvatar;
+    }
+
+    /**
+     * Set the value of nomAvatar
+     *
+     * @return  self
+     */ 
+    public function setNomAvatar($nomAvatar)
+    {
+        $this->nomAvatar = $nomAvatar;
 
         return $this;
     }

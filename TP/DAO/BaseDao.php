@@ -130,19 +130,4 @@ class BaseDao
             echo "erreur... :(" . $e->getMessage();
         }
     }
-
-    public function create($model) {
-        $model->listeProprietes();
-
-        try {
-            $connexion = new Connexion;
-
-            $requete = $connexion->prepare("INSERT INTO". $this->getNomTable() . "(titre, description) VALUES (?,?)");
-            $requete->execute(array(
-                
-            ));
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-        }
-    }
 }

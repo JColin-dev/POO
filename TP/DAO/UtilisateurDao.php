@@ -44,4 +44,72 @@ class UtilisateurDao extends BaseDao
             echo $e->getMessage();
         }
     }
+
+    public function modifyUser($id, $pseudo, $nomAvatar)
+    {
+
+        
+
+        try {
+            $connexion = new Connexion();
+
+            if($nomAvatar != "") {
+
+                $requete = $connexion->prepare("UPDATE utilisateur SET pseudo = ?, nom_avatar = ? WHERE id = ?");
+
+                $requete->execute(
+                    [
+                        $pseudo,
+                        $nomAvatar,
+                        $id
+                    ]
+                );
+            } else {
+                $requete = $connexion->prepare("UPDATE utilisateur SET pseudo = ? WHERE id = ?");
+
+                $requete->execute(
+                    [
+                        $pseudo,
+                        $id
+                    ]
+                );
+            }
+        } catch (PDOException $e) {
+            echo "erreur... :(" . $e->getMessage();
+        }
+    }
+
+    public function ajouterCompetenceUtilisateur($idUtilisateur, $idCompetence){
+        $sql = "INSERT INTO competence_utilisateur (id_competence, id_utilisateur) VALUES(?,?)";
+
+        try {
+            $connexion = new Connexion();
+
+            $requete = $connexion->prepare($sql);
+
+            $requete->execute(
+                [
+                    $idCompetence,
+                    $idUtilisateur
+                ]
+            );
+        } catch (PDOException $e) {
+            echo "erreur... :(" . $e->getMessage();
+        }
+    }
+
+    public function supprimerCompetenceUtilisateur($idCompetence, $idUtilisateur)
+    {
+        $connexion = new Connexion();
+        $requete = $connexion->prepare(
+            "DELETE FROM competence_utilisateur WHERE id_competence = ? AND id_utilisateur = ?"
+        );
+
+        $requete->execute(
+            [
+                $idCompetence,
+                $idUtilisateur
+            ]
+        );
+    }
 }
